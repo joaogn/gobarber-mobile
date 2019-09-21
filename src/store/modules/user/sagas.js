@@ -8,16 +8,15 @@ import { updateProfileSuccess, updateProfileFailure } from './actions';
 export function* updateProfile({ payload }) {
   try {
     const {
-      name, email, avatar_id, ...rest
+      name, email, ...rest
     } = payload.data;
 
     const profile = {
       name,
       email,
-      avatar_id,
-      ...(rest.oldpassword ? rest : {}),
+      ...(rest.oldpassword !== '' ? rest : {}),
     };
-
+    console.tron.log(profile);
     const response = yield call(api.put, 'users', profile);
 
 
