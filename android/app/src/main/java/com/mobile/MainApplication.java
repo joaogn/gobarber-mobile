@@ -32,13 +32,12 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-         // 3. Instantiate an instance of the CodePush runtime and add it to the list of
-            // existing packages, specifying the right deployment key. If you don't already
-            // have it, you can run "appcenter codepush deployment list -a <ownerName>/<appName> --displayKeys" to retrieve your key.
-            return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new CodePush("deployment-key-here", MainApplication.this, BuildConfig.DEBUG)
-            );
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      packages.add(new CodePush(BuildConfig.CODEPUSH_KEY, getApplicationContext(), BuildConfig.DEBUG));
+      // Packages that cannot be autolinked yet can be added manually here, for example:
+      // packages.add(new MyReactNativePackage());
+      return packages;
     }
 
     @Override
