@@ -81,6 +81,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -128,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mobile"
+        applicationId "com.joaogn.gobarber"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -152,7 +153,12 @@ android {
     }
     buildTypes {
         debug {
+            buildConfigField "String", "CODEPUSH_KEY", '""'
             signingConfig signingConfigs.debug
+        }
+        releaseStaging {
+          buildConfigField "String", "CODEPUSH_KEY", '"5DE7nAQ8eqxgiPNjl4ii2H58bW4nzbriDqFjT"'
+          matchingFallbacks = ['debug', 'release']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -160,6 +166,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            buildConfigField "String", "CODEPUSH_KEY", '"KACMwaE_zVBLkTkZkf6JOaIRYcUPymU38ehZN"'
         }
     }
     // applicationVariants are e.g. debug, release
@@ -188,6 +195,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-code-push')
     implementation project(':react-native-reanimated')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-vector-icons')
